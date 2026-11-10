@@ -10,7 +10,7 @@
     :root { --ink:#24342d; --muted:#68776f; --cream:#fbf7ef; --paper:#fffdf9; --green:#315d50; --red:#a64d3c; --gold:#c59645; --line:#e7ded0; }
     * { box-sizing:border-box; }
     html { scroll-behavior:smooth; }
-    body { margin:0; color:var(--ink); background:var(--cream); font-family: -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; line-height:1.8; }
+    body { margin:0; padding-bottom:4.5rem; color:var(--ink); background:var(--cream); font-family: -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; line-height:1.8; }
     .hero { padding:4.5rem 1.25rem 3.75rem; color:#fff; background:linear-gradient(135deg,rgba(28,70,58,.96),rgba(73,49,35,.92)), radial-gradient(circle at 85% 20%,#c59645,transparent 35%); }
     .hero-inner { max-width:1180px; margin:auto; }
     .eyebrow { letter-spacing:.18em; font-size:.78rem; opacity:.8; }
@@ -28,6 +28,7 @@
     main th { background:#edf2eb; color:var(--green); }
     main code { padding:.12rem .35rem; background:#f0ece4; border-radius:4px; }
     main td, main th, main a { overflow-wrap:anywhere; }
+    main td .cell-value { grid-column:2; min-width:0; }
     main img { max-width:100%; }
     .status { padding:.85rem 1rem; color:var(--muted); background:#fff; border:1px dashed var(--line); border-radius:10px; }
     [hidden] { display:none !important; }
@@ -37,14 +38,12 @@
     .day-card summary::before { content:"＋"; display:inline-block; width:1.4rem; color:var(--red); font:700 1.2rem/1 sans-serif; }
     .day-card[open] summary::before { content:"－"; }
     .day-card > :not(summary) { margin-left:1.15rem; margin-right:1.15rem; }
-    .place-link { white-space:normal; }
-    .quick-tools { position:fixed; right:1rem; bottom:1rem; z-index:20; display:flex; flex-direction:column; align-items:flex-end; gap:.5rem; }
-    .quick-toggle, .quick-action { border:0; border-radius:999px; box-shadow:0 8px 25px rgba(36,52,45,.2); cursor:pointer; font:600 .9rem/1.2 inherit; }
-    .quick-toggle { width:3.1rem; height:3.1rem; color:#fff; background:var(--red); font-size:1.45rem; }
-    .quick-panel { display:flex; flex-direction:column; align-items:stretch; gap:.4rem; padding:.55rem; min-width:9rem; background:var(--paper); border:1px solid var(--line); border-radius:14px; box-shadow:0 8px 25px rgba(36,52,45,.16); }
-    .quick-action { padding:.55rem .8rem; color:var(--green); background:#fff; text-align:left; }
+    main a.place-link { white-space:nowrap; overflow-wrap:normal; word-break:keep-all; display:inline-block; }
+    .quick-tools { position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; justify-content:center; padding:.45rem .75rem; background:rgba(255,253,249,.96); border-top:1px solid var(--line); box-shadow:0 -8px 25px rgba(36,52,45,.12); }
+    .quick-panel { position:relative; display:flex; justify-content:center; gap:.5rem; width:min(100%,960px); }
+    .quick-action { flex:1; max-width:14rem; padding:.65rem .8rem; border:1px solid var(--line); border-radius:10px; color:var(--green); background:#fff; cursor:pointer; font:600 .9rem/1.2 inherit; text-align:center; }
     .quick-action:hover { background:#edf2eb; }
-    #quick-guide { max-height:18rem; overflow:auto; border-top:1px solid var(--line); padding-top:.35rem; }
+    #quick-guide { max-height:65vh; overflow:auto; padding:.25rem 0; }
     #quick-guide a { display:block; padding:.2rem .25rem; color:var(--green); text-decoration:none; font-size:.82rem; line-height:1.45; }
     .modal { position:fixed; inset:0; z-index:30; display:grid; place-items:center; padding:1rem; background:rgba(25,40,34,.48); }
     .modal-card { width:min(100%,390px); padding:1.25rem; background:var(--paper); border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 60px rgba(20,30,25,.25); }
@@ -70,6 +69,7 @@
       main td::before { content:attr(data-label); font-weight:700; color:var(--green); }
       main td:only-child { display:block; }
       main td:only-child::before { display:none; }
+      main td:only-child .cell-value { grid-column:1; }
     }
   </style>
 </head>
@@ -81,12 +81,16 @@
   </div></header>
   <div class="layout"><main id="content"><div class="status">正在載入 Markdown…</div></main></div>
   <div class="quick-tools">
-    <div class="quick-panel" id="quick-panel" hidden>
+    <div class="quick-panel" id="quick-panel">
       <button class="quick-action" id="open-currency">💱 匯率換算</button>
       <button class="quick-action" id="open-days">📅 每日行程</button>
-      <nav id="quick-guide" aria-label="每日行程" hidden></nav>
     </div>
-    <button class="quick-toggle" id="quick-toggle" aria-expanded="false" aria-controls="quick-panel" aria-label="開啟快速選單">＋</button>
+  </div>
+  <div class="modal" id="daily-modal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="daily-title">
+      <div class="modal-row"><h2 id="daily-title">📅 每日行程</h2><button class="modal-close" id="close-daily" aria-label="關閉">×</button></div>
+      <nav id="quick-guide" aria-label="每日行程"></nav>
+    </section>
   </div>
   <div class="modal" id="currency-modal" hidden>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="currency-title">
@@ -175,6 +179,16 @@
       });
     }
 
+    function groupTableCellContent(content) {
+      content.querySelectorAll('table tbody td').forEach(cell => {
+        if (cell.querySelector(':scope > .cell-value')) return;
+        const value = document.createElement('span');
+        value.className = 'cell-value';
+        while (cell.firstChild) value.append(cell.firstChild);
+        cell.append(value);
+      });
+    }
+
     function removeSectionByTitle(content, title) {
       [...content.querySelectorAll('h2')].filter(heading => heading.textContent.includes(title)).forEach(heading => {
         let node = heading.nextSibling;
@@ -199,7 +213,7 @@
         event.preventDefault();
         const target = document.getElementById(link.getAttribute('href').slice(1));
         if (target) { target.open = true; target.scrollIntoView({behavior:'smooth', block:'start'}); }
-        dailyMenu.hidden = true;
+        document.getElementById('daily-modal').hidden = true;
       }));
     }
 
@@ -220,6 +234,7 @@
         });
         makeDayAccordions(content);
         addMapLinks(content);
+        groupTableCellContent(content);
         buildDailyMenu(content);
       } catch (error) {
         content.innerHTML = '<div class="status">無法載入行程內容，請確認 itinerary.md 與本頁位於同一個資料夾。</div>';
@@ -234,23 +249,19 @@
       const converted = direction === 'eur-twd' ? amount * eurTwdRate : amount / eurTwdRate;
       const from = direction === 'eur-twd' ? 'EUR' : 'TWD';
       const to = direction === 'eur-twd' ? 'TWD' : 'EUR';
-      document.getElementById('rate-result').textContent = `${converted.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})} ${to}`;
+      document.getElementById('rate-result').textContent = `${Math.round(converted).toLocaleString()} ${to}`;
     }
-    document.getElementById('quick-toggle').addEventListener('click', () => {
-      const panel = document.getElementById('quick-panel'); panel.hidden = !panel.hidden;
-      document.getElementById('quick-toggle').setAttribute('aria-expanded', String(!panel.hidden));
-    });
     document.getElementById('open-currency').addEventListener('click', () => {
       document.getElementById('currency-modal').hidden = false;
-      document.getElementById('quick-panel').hidden = true;
       updateConversion();
     });
     document.getElementById('close-currency').addEventListener('click', () => document.getElementById('currency-modal').hidden = true);
     document.getElementById('currency-modal').addEventListener('click', event => { if (event.target.id === 'currency-modal') event.currentTarget.hidden = true; });
+    document.getElementById('close-daily').addEventListener('click', () => document.getElementById('daily-modal').hidden = true);
+    document.getElementById('daily-modal').addEventListener('click', event => { if (event.target.id === 'daily-modal') event.currentTarget.hidden = true; });
     ['currency-direction','currency-amount'].forEach(id => document.getElementById(id).addEventListener('input', updateConversion));
     document.getElementById('open-days').addEventListener('click', () => {
-      const dailyMenu = document.getElementById('quick-guide');
-      dailyMenu.hidden = !dailyMenu.hidden;
+      document.getElementById('daily-modal').hidden = false;
     });
     loadItinerary();
   </script>
