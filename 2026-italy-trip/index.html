@@ -94,7 +94,7 @@
   </div>
   <div class="modal" id="currency-modal" hidden>
     <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="currency-title">
-      <div class="modal-row"><h2 id="currency-title">💱 EUR ↔ TWD 匯率換算</h2><button class="modal-close" id="close-currency" aria-label="關閉">×</button></div>
+      <div class="modal-row"><h2 id="currency-title">💱 匯率換算</h2><button class="modal-close" id="close-currency" aria-label="關閉">×</button></div>
       <label for="currency-direction">換算方向</label>
       <select id="currency-direction"><option value="eur-twd">EUR → TWD</option><option value="twd-eur">TWD → EUR</option></select>
       <label for="currency-amount">金額</label>
@@ -124,7 +124,7 @@
       const mapByLabel = new Map(mapPlaces);
       root.querySelectorAll('a').forEach(anchor => {
         const label = anchor.textContent.trim();
-        if (mapByLabel.has(label) && !label.startsWith('📍')) {
+        if (mapByLabel.has(label) && !label.startsWith('📍') && !anchor.closest('h1,h2,h3,summary')) {
           anchor.textContent = '📍 ' + label;
           anchor.classList.add('place-link');
           anchor.target = '_blank';
@@ -135,7 +135,7 @@
       const nodes = [];
       while (walker.nextNode()) {
         const node = walker.currentNode;
-        if (node.parentElement.closest('a,code,script,style')) continue;
+        if (node.parentElement.closest('a,code,script,style,h1,h2,h3,summary')) continue;
         if (mapPlaces.some(([label]) => node.nodeValue.includes(label))) nodes.push(node);
       }
       nodes.forEach(node => {
@@ -225,6 +225,7 @@
         const markdown = await response.text();
         content.innerHTML = marked.parse(markdown);
         removeSectionByTitle(content, '快速導覽');
+        removeSectionByTitle(content, '行程總覽');
         [...content.querySelectorAll('p')].filter(p => /^(檔案用途|狀態註記原則)/.test(p.textContent.trim())).forEach(p => p.remove());
         content.querySelectorAll('table').forEach(table => {
           const labels = [...table.querySelectorAll('thead th')].map(cell => cell.textContent.trim());
