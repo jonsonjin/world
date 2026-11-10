@@ -177,6 +177,18 @@
       });
     }
 
+    function removeSectionByTitle(content, title) {
+      [...content.querySelectorAll('h2')].filter(heading => heading.textContent.trim() === title).forEach(heading => {
+        let node = heading.nextSibling;
+        heading.remove();
+        while (node && !(node.nodeType === 1 && node.matches('h2'))) {
+          const next = node.nextSibling;
+          node.remove();
+          node = next;
+        }
+      });
+    }
+
     function buildDailyMenu(content) {
       const dailyMenu = document.getElementById('quick-guide');
       const days = [...content.querySelectorAll('details.day-card')];
@@ -200,6 +212,7 @@
         if (!response.ok) throw new Error('Markdown 載入失敗');
         const markdown = await response.text();
         content.innerHTML = marked.parse(markdown);
+        removeSectionByTitle(content, '快速導覽');
         [...content.querySelectorAll('p')].filter(p => /^(檔案用途|狀態註記原則)/.test(p.textContent.trim())).forEach(p => p.remove());
         content.querySelectorAll('table').forEach(table => {
           const labels = [...table.querySelectorAll('thead th')].map(cell => cell.textContent.trim());
