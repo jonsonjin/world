@@ -178,7 +178,7 @@
     }
 
     function removeSectionByTitle(content, title) {
-      [...content.querySelectorAll('h2')].filter(heading => heading.textContent.trim() === title).forEach(heading => {
+      [...content.querySelectorAll('h2')].filter(heading => heading.textContent.includes(title)).forEach(heading => {
         let node = heading.nextSibling;
         heading.remove();
         while (node && !(node.nodeType === 1 && node.matches('h2'))) {
