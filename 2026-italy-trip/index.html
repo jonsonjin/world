@@ -16,11 +16,7 @@
     .eyebrow { letter-spacing:.18em; font-size:.78rem; opacity:.8; }
     h1 { margin:.55rem 0 .4rem; font-family:Georgia,"Noto Serif TC",serif; font-size:clamp(2rem,5vw,4.1rem); line-height:1.2; }
     .hero p { max-width:760px; margin:.75rem 0 0; font-size:1.05rem; opacity:.9; }
-    .layout { display:grid; grid-template-columns:260px minmax(0,1fr); gap:2.5rem; max-width:1180px; margin:0 auto; padding:2rem 1.25rem 5rem; }
-    aside { position:sticky; top:1rem; align-self:start; max-height:calc(100vh - 2rem); overflow:auto; padding:1.1rem; background:rgba(255,253,249,.8); border:1px solid var(--line); border-radius:16px; }
-    aside h2 { margin:.1rem 0 .7rem; font-size:1rem; }
-    #toc a { display:block; padding:.25rem 0; color:var(--green); text-decoration:none; font-size:.9rem; line-height:1.5; }
-    #toc a:hover { color:var(--red); }
+    .layout { max-width:960px; margin:0 auto; padding:2rem 1.25rem 5rem; }
     main { min-width:0; background:var(--paper); padding:clamp(1.25rem,3vw,3rem); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(70,45,20,.06); }
     main h2 { margin-top:2.6rem; padding-top:1rem; border-top:2px solid var(--line); color:var(--green); font-family:Georgia,"Noto Serif TC",serif; }
     main h3 { margin-top:2rem; color:var(--red); }
@@ -60,9 +56,7 @@
     .rate-result { margin-top:1rem; padding:.8rem; background:#edf2eb; border-radius:10px; color:var(--green); }
     .rate-note { margin:.55rem 0 0; color:var(--muted); font-size:.78rem; line-height:1.5; }
     @media (max-width:800px) {
-      .layout { display:block; padding:1rem .7rem 3rem; }
-      aside { position:relative; top:auto; max-height:none; margin-bottom:1rem; }
-      #toc { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.15rem .8rem; }
+      .layout { padding:1rem .7rem 3rem; }
       main { padding:1.1rem; border-radius:12px; }
       .hero { padding:3rem 1rem 2.5rem; }
       main h2 { font-size:1.35rem; }
@@ -85,16 +79,12 @@
     <h1>🇮🇹 2026 義大利自由行</h1>
     <p>完整行程手冊｜羅馬 → 佛羅倫斯 → 威尼斯 Mestre → 羅馬</p>
   </div></header>
-  <div class="layout">
-    <aside><h2>行程導覽</h2><nav id="toc"><div class="status">正在載入行程…</div></nav></aside>
-    <main id="content"><div class="status">正在載入 Markdown…</div></main>
-  </div>
+  <div class="layout"><main id="content"><div class="status">正在載入 Markdown…</div></main></div>
   <div class="quick-tools">
     <div class="quick-panel" id="quick-panel" hidden>
       <button class="quick-action" id="open-currency">💱 匯率換算</button>
-      <button class="quick-action" id="open-guide">🧭 快速導覽</button>
-      <button class="quick-action" id="go-top">↑ 回到頂端</button>
-      <nav id="quick-guide" aria-label="快速導覽內容"></nav>
+      <button class="quick-action" id="open-days">📅 每日行程</button>
+      <nav id="quick-guide" aria-label="每日行程" hidden></nav>
     </div>
     <button class="quick-toggle" id="quick-toggle" aria-expanded="false" aria-controls="quick-panel" aria-label="開啟快速選單">＋</button>
   </div>
@@ -187,29 +177,19 @@
       });
     }
 
-    function buildToc(content) {
-      const toc = document.getElementById('toc');
-      const entries = [...content.querySelectorAll('details.day-card, h2, h3')].filter(el => el.matches('details.day-card') || !el.closest('details.day-card'));
-      toc.innerHTML = entries.map((entry, index) => {
-        const target = entry.matches('details') ? entry : entry;
-        const id = target.id || 'section-' + index;
-        target.id = id;
-        const label = entry.matches('details') ? entry.querySelector('summary').textContent : entry.textContent;
-        return `<a href="#${id}" style="padding-left:${entry.matches('h3') ? '1rem' : '0'}">${label}</a>`;
+    function buildDailyMenu(content) {
+      const dailyMenu = document.getElementById('quick-guide');
+      const days = [...content.querySelectorAll('details.day-card')];
+      dailyMenu.innerHTML = days.map((day, index) => {
+        const id = day.id || 'day-' + index;
+        day.id = id;
+        return `<a href="#${id}">${day.querySelector('summary').textContent}</a>`;
       }).join('');
-      toc.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
-        const target = document.getElementById(link.getAttribute('href').slice(1));
-        const details = target && (target.matches('details') ? target : target.closest('details'));
-        if (details) details.open = true;
-      }));
-      document.getElementById('quick-guide').innerHTML = toc.innerHTML;
-      document.getElementById('quick-guide').querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+      dailyMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
         event.preventDefault();
         const target = document.getElementById(link.getAttribute('href').slice(1));
-        const details = target && (target.matches('details') ? target : target.closest('details'));
-        if (details) details.open = true;
-        target?.scrollIntoView({behavior:'smooth', block:'start'});
-        document.getElementById('quick-panel').hidden = true;
+        if (target) { target.open = true; target.scrollIntoView({behavior:'smooth', block:'start'}); }
+        dailyMenu.hidden = true;
       }));
     }
 
@@ -229,10 +209,10 @@
         });
         makeDayAccordions(content);
         addMapLinks(content);
-        buildToc(content);
+        buildDailyMenu(content);
       } catch (error) {
         content.innerHTML = '<div class="status">無法載入行程內容，請確認 itinerary.md 與本頁位於同一個資料夾。</div>';
-        document.getElementById('toc').innerHTML = '';
+        document.getElementById('quick-guide').innerHTML = '';
       }
     }
 
@@ -274,9 +254,10 @@
     document.getElementById('close-currency').addEventListener('click', () => document.getElementById('currency-modal').hidden = true);
     document.getElementById('currency-modal').addEventListener('click', event => { if (event.target.id === 'currency-modal') event.currentTarget.hidden = true; });
     ['currency-direction','currency-amount','manual-rate'].forEach(id => document.getElementById(id).addEventListener('input', updateConversion));
-    document.getElementById('open-guide').addEventListener('click', () => { document.querySelector('aside').scrollIntoView({behavior:'smooth'}); document.getElementById('quick-panel').hidden = true; });
-    document.getElementById('go-top').addEventListener('click', () => { window.scrollTo({top:0, behavior:'smooth'}); document.getElementById('quick-panel').hidden = true; });
-    document.getElementById('quick-guide').addEventListener('click', () => {});
+    document.getElementById('open-days').addEventListener('click', () => {
+      const dailyMenu = document.getElementById('quick-guide');
+      dailyMenu.hidden = !dailyMenu.hidden;
+    });
     loadItinerary();
   </script>
 </body>
