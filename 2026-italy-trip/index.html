@@ -1,386 +1,414 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="2026 義大利自由行完整行程手冊">
-  <title>2026 義大利自由行｜完整行程手冊</title>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <style>
-    :root { --ink:#24342d; --muted:#68776f; --cream:#fbf7ef; --paper:#fffdf9; --green:#315d50; --red:#a64d3c; --gold:#c59645; --line:#e7ded0; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { margin:0; padding-bottom:4.5rem; color:var(--ink); background:var(--cream); font-family: -apple-system,BlinkMacSystemFont,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif; line-height:1.8; }
-    .hero { padding:4.5rem 1.25rem 3.75rem; color:#fff; background:linear-gradient(135deg,rgba(28,70,58,.96),rgba(73,49,35,.92)), radial-gradient(circle at 85% 20%,#c59645,transparent 35%); }
-    .hero-inner { max-width:1180px; margin:auto; }
-    .eyebrow { letter-spacing:.18em; font-size:.78rem; opacity:.8; }
-    h1 { margin:.55rem 0 .4rem; font-family:Georgia,"Noto Serif TC",serif; font-size:clamp(2rem,5vw,4.1rem); line-height:1.2; }
-    .hero p { max-width:760px; margin:.75rem 0 0; font-size:1.05rem; opacity:.9; }
-    .layout { max-width:960px; margin:0 auto; padding:2rem 1.25rem 5rem; }
-    main { min-width:0; background:var(--paper); padding:clamp(1.25rem,3vw,3rem); border:1px solid var(--line); border-radius:18px; box-shadow:0 16px 50px rgba(70,45,20,.06); }
-    main h2 { margin-top:2.6rem; padding-top:1rem; border-top:2px solid var(--line); color:var(--green); font-family:Georgia,"Noto Serif TC",serif; }
-    main h3 { margin-top:2rem; color:var(--red); }
-    main h4 { color:var(--green); }
-    main a { color:var(--red); }
-    main blockquote { margin:1.25rem 0; padding:.75rem 1rem; background:#f5eee2; border-left:4px solid var(--gold); color:#5b5145; }
-    main table { width:100%; border-collapse:collapse; margin:1rem 0 1.5rem; }
-    main th, main td { min-width:110px; padding:.6rem .75rem; border:1px solid var(--line); text-align:left; vertical-align:top; }
-    main th { background:#edf2eb; color:var(--green); }
-    main code { padding:.12rem .35rem; background:#f0ece4; border-radius:4px; }
-    main td, main th, main a { overflow-wrap:anywhere; }
-    main td .cell-value { grid-column:2; min-width:0; }
-    main img { max-width:100%; }
-    .status { padding:.85rem 1rem; color:var(--muted); background:#fff; border:1px dashed var(--line); border-radius:10px; }
-    [hidden] { display:none !important; }
-    .day-card { margin:1.25rem 0; border:1px solid var(--line); border-radius:14px; background:#fff; overflow:hidden; }
-    .day-card summary { cursor:pointer; padding:1rem 1.15rem; color:var(--green); background:#edf2eb; font:700 1.15rem/1.4 Georgia,"Noto Serif TC",serif; list-style:none; }
-    .day-card summary::-webkit-details-marker { display:none; }
-    .day-card summary::before { content:"＋"; display:inline-block; width:1.4rem; color:var(--red); font:700 1.2rem/1 sans-serif; }
-    .day-card[open] summary::before { content:"－"; }
-    .day-card > :not(summary) { margin-left:1.15rem; margin-right:1.15rem; }
-    main a.place-link { white-space:nowrap; overflow-wrap:normal; word-break:keep-all; display:inline-block; }
-    .quick-tools { position:fixed; left:0; right:0; bottom:0; z-index:20; display:flex; justify-content:center; padding:.45rem .75rem; background:rgba(255,253,249,.96); border-top:1px solid var(--line); box-shadow:0 -8px 25px rgba(36,52,45,.12); }
-    .quick-panel { position:relative; display:flex; justify-content:center; gap:.5rem; width:min(100%,960px); }
-    .quick-action { flex:1; max-width:14rem; padding:.75rem .8rem; border:1px solid var(--line); border-radius:10px; color:var(--green); background:#fff; cursor:pointer; font:600 1.05rem/1.2 inherit; text-align:center; }
-    .quick-action:hover { background:#edf2eb; }
-    #quick-guide { max-height:65vh; overflow:auto; padding:.25rem 0; }
-    #quick-guide a { display:block; padding:.2rem .25rem; color:var(--green); text-decoration:none; font-size:.82rem; line-height:1.45; }
-    .modal { position:fixed; inset:0; z-index:30; display:grid; place-items:center; padding:1rem; background:rgba(25,40,34,.48); }
-    .modal-card { width:min(100%,390px); padding:1.25rem; background:var(--paper); border:1px solid var(--line); border-radius:18px; box-shadow:0 18px 60px rgba(20,30,25,.25); }
-    .modal-card h2 { margin:.1rem 0 .8rem; color:var(--green); font-family:Georgia,"Noto Serif TC",serif; }
-    .modal-card label { display:block; margin:.7rem 0 .25rem; color:var(--muted); font-size:.9rem; }
-    .modal-card input, .modal-card select { width:100%; padding:.65rem .7rem; border:1px solid var(--line); border-radius:8px; background:#fff; font:inherit; }
-    .modal-row { display:flex; justify-content:space-between; align-items:center; gap:.8rem; margin-top:1rem; }
-    .modal-close { border:0; color:var(--muted); background:transparent; cursor:pointer; font-size:1.4rem; }
-    .rate-result { margin-top:1rem; padding:1.05rem .8rem; background:#edf2eb; border-radius:10px; color:var(--green); font-size:1.55rem; font-weight:800; line-height:1.35; text-align:center; }
-    .rate-note { margin:.55rem 0 0; color:var(--muted); font-size:.78rem; line-height:1.5; }
-    .walking-map-section { margin:1rem 1.15rem 1.5rem; padding:1rem; background:#f7f4ed; border:1px solid var(--line); border-radius:14px; }
-    .walking-map-section h4 { margin:.1rem 0 .7rem; color:var(--green); }
-    .map-schematic { padding:.9rem; background:#fff; border:1px solid var(--line); border-radius:10px; }
-    .drawn-map { overflow:hidden; border:1px solid #d9c6a8; border-radius:10px; background:#f4f0e5; }
-    .drawn-map svg { display:block; width:100%; height:auto; min-height:300px; }
-    .drawn-map .map-route { fill:none; stroke:#a64d3c; stroke-width:1.15; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:2.5 1.5; }
-    .drawn-map .map-marker { fill:#a64d3c; stroke:#fff; stroke-width:1; }
-    .drawn-map .map-number { fill:#fff; font-size:2.6px; font-weight:800; text-anchor:middle; dominant-baseline:central; }
-    .drawn-map .map-label { fill:#24342d; font-size:2.5px; font-weight:700; paint-order:stroke; stroke:#fffdf9; stroke-width:.7px; stroke-linejoin:round; }
-    .drawn-map .map-compass { fill:#315d50; font-size:3px; font-weight:800; text-anchor:middle; }
-    .walk-stats { display:flex; flex-wrap:wrap; gap:.45rem; margin-top:.7rem; }
-    .walk-segment { padding:.35rem .55rem; border-radius:7px; color:var(--green); background:#edf2eb; font-size:.8rem; line-height:1.4; }
-    .map-open-button { margin-top:.25rem; padding:.65rem .9rem; border:1px solid #d9c6a8; border-radius:9px; color:var(--green); background:#fffaf0; cursor:pointer; font:600 .95rem/1.2 inherit; }
-    .map-open-button:hover { background:#f5eee2; }
-    .map-note { margin:.65rem 0 0; color:var(--muted); font-size:.78rem; line-height:1.5; }
-    @media (max-width:800px) {
-      .layout { padding:1rem .7rem 3rem; }
-      main { padding:1.1rem; border-radius:12px; }
-      .hero { padding:3rem 1rem 2.5rem; }
-      main h2 { font-size:1.35rem; }
-      main h3 { font-size:1.1rem; }
-      .walking-map-section { margin-left:.7rem; margin-right:.7rem; padding:.7rem; }
-      .drawn-map svg { min-height:250px; }
-      main table { display:block; border:0; }
-      main thead { display:none; }
-      main tbody, main tr, main td { display:block; width:100%; min-width:0; }
-      main tr { margin:1rem 0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
-      main td { display:grid; grid-template-columns:minmax(5.2rem,30%) minmax(0,1fr); gap:.7rem; padding:.55rem .7rem; border:0; border-bottom:1px solid var(--line); }
-      main td:last-child { border-bottom:0; }
-      main td::before { content:attr(data-label); font-weight:700; color:var(--green); }
-      main table.timetable td::before { display:none; }
-      main table.timetable td .cell-value { grid-column:1 / -1; }
-      main table.timetable td.time-cell { color:var(--green); font-weight:700; }
-      main table.timetable td.time-morning { background:#edf5ee; }
-      main table.timetable td.time-afternoon { background:#fff4dc; }
-      main table.timetable td.time-evening { background:#f8e8df; }
-      main table.timetable td.time-night { background:#e9eafa; }
-      main td:only-child { display:block; }
-      main td:only-child::before { display:none; }
-      main td:only-child .cell-value { grid-column:1; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4d3a">
+<title>2026 義大利自由行</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="hero"><div class="hero-inner">
-    <div class="eyebrow">ITALIA · 2026 TRAVEL JOURNAL</div>
-    <h1>🇮🇹 2026 義大利自由行</h1>
-    <p>完整行程手冊｜羅馬 → 佛羅倫斯 → 威尼斯 Mestre → 羅馬</p>
-  </div></header>
-  <div class="layout"><main id="content"><div class="status">正在載入 Markdown…</div></main></div>
-  <div class="quick-tools">
-    <div class="quick-panel" id="quick-panel">
-      <button class="quick-action" id="open-currency">💱 匯率換算</button>
-      <button class="quick-action" id="open-days">📅 每日行程</button>
+
+<header class="hero">
+  <div class="hero-flag" aria-hidden="true"><span></span><span></span><span></span></div>
+  <p class="hero-kicker">Viaggio in Italia · 行程手冊</p>
+  <h1>2026 義大利自由行</h1>
+  <p class="hero-date">2026/11/24（二）～ 12/03（四）・2 位成人</p>
+  <p class="hero-route">羅馬 <span>→</span> 佛羅倫斯 <span>→</span> 威尼斯 Mestre <span>→</span> 羅馬</p>
+  <p class="hero-note">版本更新：2026/11/09｜時間均為義大利當地時間（台灣出發、抵達時間除外）</p>
+</header>
+
+<main>
+
+<section class="callout">
+  <h2 class="callout-title">重要提醒</h2>
+  <p><strong>已確定：</strong>華航來回航班、三段 Italo 高鐵、住宿與 6 項 KKday 景點票券。</p>
+  <p><strong>待確認：</strong>除照片明確顯示的時間外，部分景點門票入場時間仍以電子憑證為準；市區交通、當日營業時間也應出發前複核。</p>
+  <p class="callout-hot"><strong>11/30 特別提醒：</strong>聖馬可大教堂 <b>14:00</b>、Mestre 高鐵 <b>18:17</b>。建議 <b>15:30</b> 左右完成大教堂參觀，迅速返回飯店取行李。</p>
+</section>
+
+<section id="status" class="block">
+  <h2>訂單狀態一覽</h2>
+  <table class="info">
+    <thead><tr><th>類別</th><th>已訂妥／已確認</th><th>待確認或出發前複核</th></tr></thead>
+    <tbody>
+      <tr><td>航班</td><td>華航 CI0075、CI0076</td><td>航班是否異動、報到櫃檯與行李規則</td></tr>
+      <tr><td>城際交通</td><td>Italo 9916、8910、8927；車廂與座位已列於下方</td><td>出發前確認月台、班次是否改點</td></tr>
+      <tr><td>住宿</td><td>The Independent Hotel、Florence Luxury Suites、Leonardo Royal Hotel Venice Mestre</td><td>入住／退房細節、提前寄放行李</td></tr>
+      <tr><td>景點票券</td><td>梵蒂岡 09:00、總督宮 10:00、聖馬可大教堂 14:00；其餘 3 項已購票</td><td>競技場、學院美術館、烏菲茲的最終入場時段與集合方式，以電子憑證為準</td></tr>
+      <tr><td>市區交通</td><td>已規劃 Leonardo Express、羅馬地鐵、Mestre–Santa Lucia 轉乘</td><td>當日班次、票價、ACTV 與區間車票種適用範圍</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="transport" class="block">
+  <h2>已確認的航班與高鐵</h2>
+  <h3>✈️ 中華航空</h3>
+  <table class="info">
+    <thead><tr><th>航段</th><th>日期</th><th>航班</th><th>起飛</th><th>抵達</th></tr></thead>
+    <tbody>
+      <tr><td>台北桃園 TPE → 羅馬 FCO</td><td>11/24 → 11/25</td><td><strong>CI0075</strong></td><td>11/24 23:25</td><td><strong>11/25 07:05</strong></td></tr>
+      <tr><td>羅馬 FCO → 台北桃園 TPE</td><td>12/02 → 12/03</td><td><strong>CI0076</strong></td><td>12/02 10:25</td><td><strong>12/03 05:35</strong></td></tr>
+    </tbody>
+  </table>
+
+  <h3>🚄 Italo 高鐵（均已購票，2 位成人）</h3>
+  <table class="info">
+    <thead><tr><th>日期</th><th>車次</th><th>起訖</th><th>時間</th><th>車廂／座位</th><th>等級</th></tr></thead>
+    <tbody>
+      <tr><td><strong>11/28</strong></td><td><strong>9916</strong></td><td>Roma Termini → Firenze S. M. Novella</td><td><strong>08:40–10:17</strong></td><td>3 車，2、3 號</td><td>Prima Business（含 Fast Track）</td></tr>
+      <tr><td><strong>11/29</strong></td><td><strong>8910</strong></td><td>Firenze S. M. Novella → Venezia Mestre</td><td><strong>12:39–14:42</strong></td><td>1 車，41、42 號</td><td>Prima Business</td></tr>
+      <tr><td><strong>11/30</strong></td><td><strong>8927</strong></td><td>Venezia Mestre → Roma Termini</td><td><strong>18:17–22:10</strong></td><td>1 車，29、30 號</td><td>Prima Business</td></tr>
+    </tbody>
+  </table>
+  <p class="note">🧳 建議在城際高鐵出發前 <strong>20～30 分鐘</strong>抵達車站，確認月台資訊。上述為已購票時間，出發前仍可透過鐵路公司查詢是否改點。</p>
+</section>
+
+<section id="hotels" class="block">
+  <h2>住宿資訊</h2>
+  <table class="info">
+    <thead><tr><th>入住日期</th><th>地區</th><th>住宿</th></tr></thead>
+    <tbody>
+      <tr><td>11/25～11/27（三晚）</td><td>羅馬 Termini</td><td><a class="pin" data-q="The Independent Hotel Rome">The Independent Hotel</a></td></tr>
+      <tr><td>11/28（一晚）</td><td>佛羅倫斯</td><td><a class="pin" href="https://maps.app.goo.gl/xiqg6v4N2TRy4usAA">Florence Luxury Suites</a></td></tr>
+      <tr><td>11/29（一晚）</td><td>威尼斯 Mestre</td><td><a class="pin" href="https://maps.app.goo.gl/x6t4s7a7oxSbTJ7K9">Leonardo Royal Hotel Venice Mestre</a></td></tr>
+      <tr><td>11/30～12/01（兩晚）</td><td>羅馬 Termini</td><td><a class="pin" data-q="The Independent Hotel Rome">The Independent Hotel</a></td></tr>
+    </tbody>
+  </table>
+  <p class="note"><strong>行李關鍵：</strong>11/28 到佛羅倫斯先確認能否在入住前寄物；11/29 早上退房後確認能否寄物；11/30 於 Mestre 退房後先寄放行李，下午回飯店領取。</p>
+</section>
+
+<section id="tickets" class="block">
+  <h2>已購景點門票</h2>
+  <table class="info">
+    <thead><tr><th>日期</th><th>景點及內容</th><th>時間</th><th>訂票狀態</th></tr></thead>
+    <tbody>
+      <tr><td><strong>11/26</strong></td><td>梵蒂岡博物館＋西斯汀禮拜堂免排隊票、入口協助</td><td><strong>09:00</strong></td><td>KKday 憑證已發送</td></tr>
+      <tr><td><strong>11/27</strong></td><td>羅馬競技場＋古羅馬廣場＋帕拉蒂尼山、語音導覽（競技場為選購）</td><td>原行程 <strong>08:30</strong></td><td>已購票；入場時間待核對憑證</td></tr>
+      <tr><td><strong>11/28</strong></td><td>學院美術館（含語音應用程式）</td><td>原行程 <strong>15:00</strong></td><td>已購票；入場時間待核對憑證</td></tr>
+      <tr><td><strong>11/29</strong></td><td>烏菲茲美術館優先入場票</td><td>原行程 <strong>08:15</strong></td><td>已購票；入場時間待核對憑證</td></tr>
+      <tr><td><strong>11/30</strong></td><td>總督宮＆聖馬可廣場博物館套票、導覽指南</td><td><strong>10:00</strong></td><td>已購票；2 位成人</td></tr>
+      <tr><td><strong>11/30</strong></td><td>聖馬可大教堂（含教堂入場，套票另列黃金祭壇、博物館、露台等權益）</td><td><strong>14:00</strong></td><td>已購票；2 位成人</td></tr>
+    </tbody>
+  </table>
+
+  <h3>威尼斯套票重要兌換資訊</h3>
+  <ul class="bullets">
+    <li><strong>聖馬可大教堂：</strong>票券顯示 <strong>11/30 14:00</strong>。依 KKday 說明，需留意 <a class="pin" data-q="Calle de le Rasse 4536 Venezia">Venice Tours Office, Calle de le Rasse 4536, Venezia</a> 的集合／換票要求；請依最終憑證提前抵達。不同套票項目是否全部適用，依憑證細則。</li>
+    <li><strong>總督宮：</strong>票券顯示 <strong>11/30 10:00</strong>；套票另包含科雷爾博物館、國家考古博物館、馬爾恰納圖書館等權益，但當天火車時間固定，未必能全數參觀。</li>
+    <li><strong>行程不能沿用舊版 11:15 聖馬可大教堂預約</strong>；新購票憑證確定為 <strong>14:00</strong>。</li>
+  </ul>
+</section>
+
+<section id="days" class="block">
+  <h2>每日行程</h2>
+  <div class="legend" aria-label="時段顏色">
+    <span class="lg t-morning">早上</span>
+    <span class="lg t-afternoon">下午</span>
+    <span class="lg t-evening">晚間</span>
+    <span class="lg t-night">夜間</span>
+  </div>
+
+  <!-- 11/24 -->
+  <details class="day" id="d1124" data-date="11/24（二）" data-title="台北出發">
+    <summary><span class="d-date">11/24<small>二</small></span><span class="d-title">台北出發</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <table class="sched">
+        <thead><tr><th>時間（台灣）</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">20:00 前後（建議）</td><td>抵達 <a class="pin" data-q="Taoyuan International Airport Terminal 2">桃園國際機場</a>、報到與託運行李</td></tr>
+          <tr class="key"><td class="t">23:25</td><td><strong>CI0075 台北桃園 → 羅馬 FCO</strong>，隔日早上抵達</td></tr>
+        </tbody>
+      </table>
     </div>
+  </details>
+
+  <!-- 11/25 -->
+  <details class="day" id="d1125" data-date="11/25（三）" data-title="羅馬抵達與老城">
+    <summary><span class="d-date">11/25<small>三</small></span><span class="d-title">羅馬抵達與老城</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag">住宿</span><a class="pin" data-q="The Independent Hotel Rome">The Independent Hotel</a></p>
+      <button class="map-btn" type="button" data-map="1125">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr class="key"><td class="t">07:05</td><td>抵達 <a class="pin" data-q="Rome Fiumicino Airport FCO">羅馬 Fiumicino（FCO）機場</a></td></tr>
+          <tr><td class="t">07:05–08:30</td><td>下機、入境、領行李（估計）</td></tr>
+          <tr><td class="t">08:30–09:15</td><td>跟隨 <strong>Train / Treni</strong> 指標到機場車站、買票候車</td></tr>
+          <tr><td class="t">約 09:15–09:47</td><td>搭 <strong>Leonardo Express</strong> 直達 <a class="pin" data-q="Roma Termini">Roma Termini</a>（搭車約 32 分鐘；時段為估計，非已購班次）</td></tr>
+          <tr><td class="t">09:50–10:30</td><td>步行至飯店寄放行李、稍作休息</td></tr>
+          <tr><td class="t">10:30–12:00</td><td>早餐、咖啡、調整時差</td></tr>
+          <tr><td class="t">12:00–13:00</td><td><a class="pin" data-q="Piazza della Repubblica Roma">共和廣場</a>、<a class="pin" data-q="Le Quattro Fontane Roma">四泉街</a></td></tr>
+          <tr><td class="t">13:15–14:00</td><td><a class="pin" data-q="Fontana di Trevi">特雷維噴泉（許願池）</a></td></tr>
+          <tr><td class="t">14:15–15:00</td><td><a class="pin" data-q="Piazza di Spagna Roma">西班牙廣場</a>、西班牙階梯</td></tr>
+          <tr><td class="t">15:30–16:30</td><td><a class="pin" data-q="Piazza del Popolo Roma">人民廣場</a>、<a class="pin" data-q="Terrazza del Pincio Roma">平丘露台</a></td></tr>
+          <tr><td class="t">17:00–18:00</td><td><a class="pin" data-q="Pantheon Roma">萬神殿</a>（需另確認門票與開放時間）</td></tr>
+          <tr><td class="t">18:00–19:00</td><td><a class="pin" data-q="Piazza Navona Roma">納沃納廣場</a></td></tr>
+          <tr><td class="t">19:00 後</td><td>老城晚餐、返回飯店</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><strong>交通：</strong>FCO → Roma Termini 建議 Leonardo Express；從 Termini 步行至 The Independent Hotel 約 5～10 分鐘。<br><strong>建議：</strong>第一天不加排難更改的活動，留足航班、入境彈性。</p>
+    </div>
+  </details>
+
+  <!-- 11/26 -->
+  <details class="day" id="d1126" data-date="11/26（四）" data-title="梵蒂岡與聖彼得大教堂">
+    <summary><span class="d-date">11/26<small>四</small></span><span class="d-title">梵蒂岡與聖彼得大教堂</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag tag-red">重點</span>梵蒂岡博物館 <strong>09:00</strong>（KKday 已購票）</p>
+      <p class="meta"><span class="tag">交通</span>飯店步行至 <a class="pin" data-q="Repubblica Metro Station Roma">Repubblica</a> 地鐵站 → 搭 <strong>Metro A 線，往 Battistini</strong> → <a class="pin" data-q="Ottaviano Metro Station Roma">Ottaviano</a> 下車 → 步行至博物館 <strong>Viale Vaticano</strong> 入口。<strong>不要走到聖彼得廣場當作博物館入口。</strong></p>
+      <button class="map-btn" type="button" data-map="1126">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">07:00–07:40</td><td>早餐</td></tr>
+          <tr><td class="t">07:50</td><td>從 The Independent Hotel 出發</td></tr>
+          <tr><td class="t">08:00–08:20</td><td>地鐵 Repubblica → Ottaviano（含候車彈性）</td></tr>
+          <tr><td class="t">08:20–08:40</td><td>步行前往梵蒂岡博物館入口／憑證指定集合處</td></tr>
+          <tr><td class="t">08:40–09:00</td><td>排隊、換票或入口協助</td></tr>
+          <tr class="key"><td class="t">09:00–12:00</td><td><strong><a class="pin" data-q="Musei Vaticani Viale Vaticano">梵蒂岡博物館</a>、西斯汀禮拜堂</strong></td></tr>
+          <tr><td class="t">12:00–12:45</td><td>午餐、咖啡</td></tr>
+          <tr><td class="t">12:45–13:30</td><td><a class="pin" data-q="Piazza San Pietro">聖彼得廣場</a></td></tr>
+          <tr><td class="t">13:30–15:00</td><td><a class="pin" data-q="Basilica di San Pietro">聖彼得大教堂</a>（排隊與安檢需預留彈性）</td></tr>
+          <tr><td class="t">15:00–16:00</td><td><a class="pin" data-q="Cupola di San Pietro">聖彼得圓頂</a>（選配，依排隊與體力決定）</td></tr>
+          <tr><td class="t">16:00–17:30</td><td><a class="pin" data-q="Castel Sant'Angelo">聖天使堡</a>（是否進內部依時間與門票決定）</td></tr>
+          <tr><td class="t">17:30–18:00</td><td><a class="pin" data-q="Ponte Sant'Angelo">聖天使橋</a>拍照</td></tr>
+          <tr><td class="t">18:00 後</td><td>晚餐、返回飯店</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><strong>提醒：</strong>梵蒂岡博物館與聖彼得大教堂是不同入口；穿著須符合宗教場所規定。地鐵票可現場購買或使用可用的感應付款方式。</p>
+    </div>
+  </details>
+
+  <!-- 11/27 -->
+  <details class="day" id="d1127" data-date="11/27（五）" data-title="古羅馬與真理之口">
+    <summary><span class="d-date">11/27<small>五</small></span><span class="d-title">古羅馬與真理之口</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag tag-red">重點</span>競技場＋古羅馬廣場＋帕拉蒂尼山票已購；<strong>08:30 是原規劃時間，請以憑證為準</strong>。</p>
+      <p class="meta"><span class="tag">交通</span>飯店前往 Termini，搭 <strong>地鐵 B 線往 Laurentina</strong>，在 <a class="pin" data-q="Colosseo Metro Station Roma">Colosseo</a> 下車。</p>
+      <button class="map-btn" type="button" data-map="1127">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">06:45–07:35</td><td>早餐、準備出發</td></tr>
+          <tr><td class="t">07:35–08:20</td><td>前往 Colosseo、找入口與安檢</td></tr>
+          <tr class="key"><td class="t">08:30–09:45</td><td><a class="pin" data-q="Colosseo Roma">羅馬競技場</a>（時間待憑證確認）</td></tr>
+          <tr><td class="t">09:45–11:00</td><td><a class="pin" data-q="Palatino Roma">帕拉蒂尼山</a></td></tr>
+          <tr><td class="t">11:00–12:30</td><td><a class="pin" data-q="Foro Romano">古羅馬廣場</a></td></tr>
+          <tr><td class="t">12:30–13:00</td><td><a class="pin" data-q="Piazza del Campidoglio Roma">卡比托利歐山與廣場</a></td></tr>
+          <tr><td class="t">13:00–14:00</td><td>午餐</td></tr>
+          <tr><td class="t">14:00–14:30</td><td><a class="pin" data-q="Piazza Venezia Roma">威尼斯廣場</a>、<a class="pin" data-q="Vittoriano Roma">維托里亞諾紀念堂</a>外觀</td></tr>
+          <tr><td class="t">14:45–15:45</td><td><a class="pin" data-q="Bocca della Verità Roma">真理之口</a>、科斯梅丁聖母教堂（排隊／結束時間須確認）</td></tr>
+          <tr><td class="t">15:45–16:15</td><td><a class="pin" data-q="Tempio di Ercole Vincitore Roma">赫拉克勒斯勝利神廟</a>、波圖努斯神廟</td></tr>
+          <tr><td class="t">16:15–16:50</td><td><strong>優先到 <a class="pin" data-q="Giardino degli Aranci Roma">橘園</a> 觀景</strong>，爭取日落前後景色</td></tr>
+          <tr><td class="t">16:50–17:30</td><td><a class="pin" data-q="Buco della Serratura Aventino Roma">馬爾他騎士團鎖孔</a>／<a class="pin" data-q="Ghetto Ebraico Roma">猶太區</a>（視體力）</td></tr>
+          <tr><td class="t">18:00 後</td><td><a class="pin" data-q="Trastevere Roma">Trastevere 台伯河西岸</a>晚餐</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><strong>調整說明：</strong>11 月底羅馬日落較早，原排 17:00 才到橘園容易錯過夕陽，因此提前。</p>
+    </div>
+  </details>
+
+  <!-- 11/28 -->
+  <details class="day" id="d1128" data-date="11/28（六）" data-title="羅馬到佛羅倫斯">
+    <summary><span class="d-date">11/28<small>六</small></span><span class="d-title">羅馬到佛羅倫斯</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag">住宿</span><a class="pin" href="https://maps.app.goo.gl/xiqg6v4N2TRy4usAA">Florence Luxury Suites</a></p>
+      <p class="meta"><span class="tag tag-red">已購交通</span><strong>Italo 9916，08:40 Roma Termini → 10:17 Firenze S. M. Novella</strong>；Prima Business，3 車 2、3 號。</p>
+      <p class="meta"><span class="tag tag-gold">已購景點</span>學院美術館（原規劃 15:00，待核對憑證）。</p>
+      <button class="map-btn" type="button" data-map="1128">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">07:00–07:45</td><td>飯店早餐、退房</td></tr>
+          <tr><td class="t">07:45–08:10</td><td>步行到 <a class="pin" data-q="Roma Termini">Roma Termini</a>，查看月台</td></tr>
+          <tr class="key"><td class="t">08:40–10:17</td><td><strong>Italo 9916 高鐵前往佛羅倫斯</strong></td></tr>
+          <tr><td class="t">10:20–11:00</td><td>前往 Florence Luxury Suites，寄放行李（先確認可寄物）</td></tr>
+          <tr><td class="t">11:00–11:30</td><td>步行至百花大教堂</td></tr>
+          <tr><td class="t">11:30–12:30</td><td><a class="pin" data-q="Cattedrale di Santa Maria del Fiore Firenze">百花大教堂</a>本體（開放時間／排隊待確認）</td></tr>
+          <tr><td class="t">12:30–13:15</td><td><a class="pin" data-q="Battistero di San Giovanni Firenze">洗禮堂</a>、天堂之門及教堂廣場</td></tr>
+          <tr><td class="t">13:15–14:15</td><td>午餐、休息</td></tr>
+          <tr><td class="t">14:15–14:45</td><td>步行到學院美術館，準備入場</td></tr>
+          <tr class="key"><td class="t">15:00–16:20</td><td><a class="pin" data-q="Galleria dell'Accademia Firenze">學院美術館</a>、米開朗基羅《大衛像》（時間待核對）</td></tr>
+          <tr><td class="t">16:20–17:00</td><td><a class="pin" data-q="Piazza della Signoria Firenze">領主廣場</a>、<a class="pin" data-q="Palazzo Vecchio Firenze">舊宮</a>外觀</td></tr>
+          <tr><td class="t">17:00–17:30</td><td><a class="pin" data-q="Ponte Vecchio Firenze">老橋</a></td></tr>
+          <tr><td class="t">17:30–18:00</td><td>搭計程車或公車到米開朗基羅廣場</td></tr>
+          <tr><td class="t">18:00–19:00</td><td><a class="pin" data-q="Piazzale Michelangelo Firenze">米開朗基羅廣場</a> <strong>夜景</strong>（此時已非日落）</td></tr>
+          <tr><td class="t">19:00 後</td><td>晚餐、返回住宿</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><strong>提醒：</strong>若非常想看米開朗基羅廣場日落，需犧牲其他景點或調整學院美術館；不建議壓縮已購票的大衛像參觀。</p>
+    </div>
+  </details>
+
+  <!-- 11/29 -->
+  <details class="day" id="d1129" data-date="11/29（日）" data-title="佛羅倫斯到威尼斯">
+    <summary><span class="d-date">11/29<small>日</small></span><span class="d-title">佛羅倫斯到威尼斯</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag">住宿</span><a class="pin" href="https://maps.app.goo.gl/x6t4s7a7oxSbTJ7K9">Leonardo Royal Hotel Venice Mestre</a></p>
+      <p class="meta"><span class="tag tag-red">已購交通</span><strong>Italo 8910，12:39 Firenze S. M. Novella → 14:42 Venezia Mestre</strong>；Prima Business，1 車 41、42 號。</p>
+      <p class="meta"><span class="tag tag-gold">已購景點</span>烏菲茲美術館（原規劃 08:15，待核對憑證）。</p>
+      <button class="map-btn" type="button" data-map="1129">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">06:45–07:35</td><td>早餐、退房並寄放行李</td></tr>
+          <tr><td class="t">07:35–08:00</td><td>步行至烏菲茲美術館、找入口</td></tr>
+          <tr class="key"><td class="t">08:15–10:15</td><td><a class="pin" data-q="Galleria degli Uffizi Firenze">烏菲茲美術館</a>（時間待憑證確認）</td></tr>
+          <tr><td class="t">10:15–11:00</td><td>返回 Florence Luxury Suites</td></tr>
+          <tr><td class="t">11:00–11:30</td><td>領行李、前往 <a class="pin" data-q="Firenze Santa Maria Novella station">Firenze S. M. Novella</a></td></tr>
+          <tr><td class="t">11:30–12:10</td><td>車站附近簡單午餐、候車</td></tr>
+          <tr class="key"><td class="t">12:39–14:42</td><td><strong>Italo 8910 高鐵至 Venezia Mestre</strong></td></tr>
+          <tr><td class="t">14:45–15:20</td><td>步行至 Leonardo Royal Hotel Venice Mestre，辦理入住／寄物</td></tr>
+          <tr><td class="t">15:20–15:50</td><td>從 <a class="pin" data-q="Venezia Mestre station">Venezia Mestre</a> 搭區間火車至 <a class="pin" data-q="Venezia Santa Lucia station">Venezia Santa Lucia</a>（含候車彈性）</td></tr>
+          <tr><td class="t">16:00–17:00</td><td><a class="pin" data-q="Ponte di Rialto Venezia">里亞托橋</a>、大運河</td></tr>
+          <tr><td class="t">17:00–18:00</td><td><a class="pin" data-q="Piazza San Marco Venezia">聖馬可廣場</a>、<a class="pin" data-q="Ponte dei Sospiri Venezia">嘆息橋</a>外觀</td></tr>
+          <tr><td class="t">18:00–19:00</td><td>選搭水上巴士欣賞大運河夜景</td></tr>
+          <tr><td class="t">19:00 後</td><td>Cicchetti 小點、晚餐，再返回 Mestre 飯店</td></tr>
+        </tbody>
+      </table>
+      <p class="note"><strong>Mestre 不是威尼斯本島：</strong>抵達 Venezia Mestre 後先去飯店放行李，下午再輕裝進本島。Mestre ↔ Santa Lucia 的一般 Trenitalia 區間車與 ACTV 水上巴士票須分別確認適用範圍，不要假設所有 ACTV 票都包含火車。</p>
+    </div>
+  </details>
+
+  <!-- 11/30 -->
+  <details class="day" id="d1130" data-date="11/30（一）" data-title="威尼斯到羅馬">
+    <summary><span class="d-date">11/30<small>一</small></span><span class="d-title">威尼斯到羅馬</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p class="meta"><span class="tag tag-gold">已購景點</span>總督宮 <strong>10:00</strong>、聖馬可大教堂 <strong>14:00</strong>。</p>
+      <p class="meta"><span class="tag tag-red">已購交通</span><strong>Italo 8927，18:17 Venezia Mestre → 22:10 Roma Termini</strong>；Prima Business，1 車 29、30 號。</p>
+      <p class="meta"><span class="tag">住宿</span><a class="pin" data-q="The Independent Hotel Rome">The Independent Hotel</a></p>
+      <button class="map-btn" type="button" data-map="1130">🗺️ 查看簡易地圖</button>
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">07:00–07:45</td><td>早餐、整理行李</td></tr>
+          <tr><td class="t">07:45–08:15</td><td>Mestre 飯店退房，確認寄放行李</td></tr>
+          <tr><td class="t">08:15–09:30</td><td>Mestre → Santa Lucia，再搭水上巴士／步行前往聖馬可區（交通方式與班次待當日確認）</td></tr>
+          <tr><td class="t">09:30–10:00</td><td>確認總督宮票券入場地點</td></tr>
+          <tr class="key"><td class="t">10:00–12:00</td><td><strong><a class="pin" data-q="Palazzo Ducale Venezia">總督宮</a>、嘆息橋、監獄</strong></td></tr>
+          <tr><td class="t">12:00–13:15</td><td>午餐、<a class="pin" data-q="Piazza San Marco Venezia">聖馬可廣場</a></td></tr>
+          <tr><td class="t">13:15–13:50</td><td>依 KKday 憑證前往 <a class="pin" data-q="Calle de le Rasse 4536 Venezia">Calle de le Rasse 4536</a> 集合／換票</td></tr>
+          <tr class="key"><td class="t">14:00–15:30</td><td><strong><a class="pin" data-q="Basilica di San Marco Venezia">聖馬可大教堂</a></strong>；優先參觀教堂、黃金祭壇、博物館與露台（須以套票實際權益及導覽時長為準）</td></tr>
+          <tr class="key"><td class="t">15:30–17:00</td><td><strong>儘快搭水上巴士／火車返回 Mestre</strong>；此段含轉乘但仍有班次不確定性</td></tr>
+          <tr><td class="t">17:00–17:30</td><td>飯店領取寄放行李</td></tr>
+          <tr class="key"><td class="t">17:30 前後</td><td>抵達 <a class="pin" data-q="Venezia Mestre station">Venezia Mestre 車站</a>、查月台候車</td></tr>
+          <tr class="key"><td class="t">18:17–22:10</td><td><strong>Italo 8927 高鐵返回 Roma Termini</strong></td></tr>
+          <tr><td class="t">22:10 後</td><td>步行至 The Independent Hotel 入住</td></tr>
+        </tbody>
+      </table>
+      <div class="warn">⚠️ <strong>這天時間較緊：</strong>若大教堂套票需要較長的團體導覽、或水上巴士延誤，可能壓縮領行李及搭車時間。已購高鐵不可錯過；建議務必核對集合時長、可否提前結束參觀，以及當日回程船班。<strong>最穩妥是 15:30 左右離開聖馬可區。</strong></div>
+    </div>
+  </details>
+
+  <!-- 12/01 -->
+  <details class="day" id="d1201" data-date="12/01（二）" data-title="羅馬彈性日">
+    <summary><span class="d-date">12/01<small>二</small></span><span class="d-title">羅馬彈性日</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <p>尚未有固定景點與門票，推薦作為<strong>緩衝、自由散步、購物、補逛羅馬景點</strong>的一天。前一晚 22:10 才抵達羅馬，可安排較晚出門。</p>
+      <p class="meta"><span class="tag">住宿</span><a class="pin" data-q="The Independent Hotel Rome">The Independent Hotel</a></p>
+      <p class="note"><strong>提醒：</strong>晚上整理退稅文件、確認行李重量及隔日機場交通。</p>
+    </div>
+  </details>
+
+  <!-- 12/02-03 -->
+  <details class="day" id="d1202" data-date="12/02（三）～12/03（四）" data-title="回程與抵台">
+    <summary><span class="d-date">12/02<small>三</small></span><span class="d-title">回程，12/03 抵台</span><span class="d-chev" aria-hidden="true"></span></summary>
+    <div class="day-body">
+      <table class="sched">
+        <thead><tr><th>時間</th><th>行程</th></tr></thead>
+        <tbody>
+          <tr><td class="t">約 06:00–06:30（建議）</td><td>羅馬飯店退房，前往 Termini 或安排機場接駁</td></tr>
+          <tr><td class="t">約 07:25 前（建議）</td><td>抵達 <a class="pin" data-q="Rome Fiumicino Airport FCO">Fiumicino 機場</a>，預留國際航班報到、安檢、退稅時間</td></tr>
+          <tr class="key"><td class="t">12/02 10:25</td><td><strong>CI0076 羅馬 FCO → 台北 TPE</strong></td></tr>
+          <tr class="key"><td class="t">12/03 05:35</td><td>抵達台北桃園機場（台灣時間）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<section id="tips" class="block">
+  <h2>交通票與提醒</h2>
+
+  <h3>羅馬 FCO 機場 ↔ 市區</h3>
+  <ul class="bullets">
+    <li><strong>去程 11/25：</strong>搭 <a href="https://www.trenitalia.com/en/services/leonardo-express.html" target="_blank" rel="noopener">Leonardo Express（Trenitalia 官方）</a>從 <strong>Fiumicino Aeroporto</strong> 直達 <strong>Roma Termini</strong>，約 32 分鐘；機場到飯店總耗時需加上入境、候車與步行。</li>
+    <li><strong>票價：</strong>一般單程約 <strong>€14／人</strong>，兩人約 €28（購票時以官網顯示為準）。</li>
+    <li><strong>建議：</strong>11/25 入境時間不確定，可抵達後再購票；12/02 返程須以起飛時間倒推、保留足夠機場緩衝。</li>
+  </ul>
+
+  <h3>羅馬市區</h3>
+  <ul class="bullets">
+    <li><strong>11/26 梵蒂岡：</strong>The Independent Hotel → Repubblica → <strong>Metro A 往 Battistini</strong> → <strong>Ottaviano</strong> → 步行到梵蒂岡博物館入口。</li>
+    <li><strong>11/27 競技場：</strong>Termini → <strong>Metro B 往 Laurentina</strong> → <strong>Colosseo</strong>。</li>
+    <li>可以使用當日適用的市區單程票或官方支援的感應支付方式；實際票價、營運狀況請出發前確認。</li>
+  </ul>
+
+  <h3>威尼斯 Mestre ↔ 本島與 ACTV</h3>
+  <ul class="bullets">
+    <li>飯店在 <strong>Venezia Mestre</strong> 車站附近，不在本島。</li>
+    <li><strong>Mestre → Santa Lucia：</strong>可搭 Trenitalia 區間火車；在 Santa Lucia 出站後再步行或轉乘 ACTV 水上巴士。</li>
+    <li><strong>ACTV 24 小時交通票：</strong>不必搶先購買，可依兩天實際搭船次數決定。一般 ACTV 水上巴士票<strong>不可直接視為包含 Trenitalia 區間火車</strong>；若購買特殊整合票種，需以該票種列明的涵蓋範圍為準。</li>
+    <li>若 11/29 下午啟用 24 小時票，<strong>11/30 下午返回 Mestre 時可能超過 24 小時</strong>，須預備補票方案。</li>
+    <li><a href="https://www.veneziaunica.it/" target="_blank" rel="noopener">Venezia Unica 官方售票</a>｜<a href="https://actv.avmspa.it/" target="_blank" rel="noopener">ACTV 官方</a></li>
+  </ul>
+
+  <h3>常用官方網站</h3>
+  <ul class="links">
+    <li><a href="https://www.italotreno.com/" target="_blank" rel="noopener">Italo 高鐵</a></li>
+    <li><a href="https://www.trenitalia.com/" target="_blank" rel="noopener">Trenitalia</a></li>
+    <li><a href="https://www.museivaticani.va/" target="_blank" rel="noopener">梵蒂岡博物館</a></li>
+    <li><a href="https://duomo.firenze.it/" target="_blank" rel="noopener">佛羅倫斯大教堂</a></li>
+    <li><a href="https://www.uffizi.it/" target="_blank" rel="noopener">烏菲茲美術館</a></li>
+    <li><a href="https://actv.avmspa.it/" target="_blank" rel="noopener">威尼斯 ACTV</a></li>
+  </ul>
+</section>
+
+<footer class="foot">Buon viaggio! 🇮🇹</footer>
+</main>
+
+<!-- 底部選單 -->
+<nav class="menubar" aria-label="快速功能">
+  <button type="button" id="openFx"><span class="mb-ico" aria-hidden="true">€</span><span>匯率換算</span></button>
+  <button type="button" id="openDays"><span class="mb-ico" aria-hidden="true">☰</span><span>每日行程</span></button>
+</nav>
+
+<!-- 匯率換算 -->
+<dialog id="fxDlg" class="sheet">
+  <div class="sheet-head"><h2>匯率換算</h2><button type="button" class="x" data-close aria-label="關閉">×</button></div>
+  <div class="fx">
+    <div class="fx-dir" role="group" aria-label="換算方向">
+      <button type="button" class="on" data-dir="e2t">EUR → TWD</button>
+      <button type="button" data-dir="t2e">TWD → EUR</button>
+    </div>
+    <label class="fx-input">
+      <span id="fxFromCur">€</span>
+      <input id="fxAmt" type="text" inputmode="decimal" autocomplete="off" value="10" aria-label="金額">
+    </label>
+    <div class="fx-out"><span id="fxToCur">NT$</span><output id="fxRes">367</output></div>
+    <div class="fx-quick" id="fxQuick"></div>
+    <p class="fx-rate">固定匯率 1 EUR = 36.72 TWD</p>
   </div>
-  <div class="modal" id="daily-modal" hidden>
-    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="daily-title">
-      <div class="modal-row"><h2 id="daily-title">📅 每日行程</h2><button class="modal-close" id="close-daily" aria-label="關閉">×</button></div>
-      <nav id="quick-guide" aria-label="每日行程"></nav>
-    </section>
-  </div>
-  <div class="modal" id="currency-modal" hidden>
-    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="currency-title">
-      <div class="modal-row"><h2 id="currency-title">💱 匯率換算</h2><button class="modal-close" id="close-currency" aria-label="關閉">×</button></div>
-      <label for="currency-direction">換算方向</label>
-      <select id="currency-direction"><option value="eur-twd">EUR → TWD</option><option value="twd-eur">TWD → EUR</option></select>
-      <label for="currency-amount">金額</label>
-      <input id="currency-amount" type="number" min="0" step="0.01" value="100" inputmode="decimal">
-      <div class="rate-result" id="rate-result">請輸入金額</div>
-      <p class="rate-note">固定匯率：1 EUR = 36.72 TWD。實際刷卡或現金兌換匯率可能不同。</p>
-    </section>
-  </div>
-  <script>
-    const mapPlaces = [
-      ['The Independent Hotel', 'The Independent Hotel Rome'],
-      ['Florence Luxury Suites', 'Florence Luxury Suites'],
-      ['Leonardo Royal Hotel Venice Mestre', 'Leonardo Royal Hotel Venice Mestre'],
-      ['梵蒂岡博物館', 'Vatican Museums Rome'], ['聖彼得大教堂', 'St Peters Basilica Vatican'],
-      ['聖彼得圓頂', 'St Peters Dome Vatican'], ['聖天使堡', 'Castel Sant Angelo Rome'],
-      ['羅馬競技場', 'Colosseum Rome'], ['競技場', 'Colosseum Rome'], ['古羅馬廣場', 'Roman Forum Rome'],
-      ['帕拉蒂尼山', 'Palatine Hill Rome'], ['真理之口', 'Bocca della Verita Rome'], ['橘園', 'Orange Garden Rome'],
-      ['百花大教堂', 'Duomo Florence'], ['學院美術館', 'Galleria dell Accademia Florence'],
-      ['米開朗基羅廣場', 'Piazzale Michelangelo Florence'], ['烏菲茲美術館', 'Uffizi Gallery Florence'],
-      ['里亞托橋', 'Rialto Bridge Venice'], ['聖馬可廣場', 'St Marks Square Venice'],
-      ['總督宮', 'Doge Palace Venice'], ['聖馬可大教堂', 'St Marks Basilica Venice'],
-      ['Roma Termini', 'Roma Termini'], ['Firenze S. M. Novella', 'Firenze Santa Maria Novella'],
-      ['Venezia Mestre', 'Venezia Mestre Station'], ['Venezia Santa Lucia', 'Venezia Santa Lucia Station']
-    ].sort((a, b) => b[0].length - a[0].length);
+</dialog>
 
-    const walkingMaps = {
-      '11/25': { title:'羅馬老城步行參考', segments:[[
-        ['The Independent Hotel',41.9018,12.4995], ['共和廣場',41.9022,12.4964], ['特雷維噴泉',41.9009,12.4833], ['西班牙廣場',41.9058,12.4823], ['人民廣場',41.9109,12.4764], ['萬神殿',41.8986,12.4769], ['納沃納廣場',41.8992,12.4731]
-      ]]},
-      '11/26': { title:'梵蒂岡步行參考', segments:[[
-        ['Ottaviano 地鐵站',41.9086,12.4578], ['梵蒂岡博物館',41.9065,12.4536], ['聖彼得大教堂',41.9022,12.4539], ['聖天使堡',41.9031,12.4663], ['聖天使橋',41.9030,12.4668]
-      ]]},
-      '11/27': { title:'古羅馬區步行參考', segments:[[
-        ['羅馬競技場',41.8902,12.4922], ['帕拉蒂尼山',41.8893,12.4870], ['古羅馬廣場',41.8925,12.4853], ['卡比托利歐山',41.8931,12.4828], ['威尼斯廣場',41.8955,12.4823], ['真理之口',41.8882,12.4815], ['橘園',41.8854,12.4780]
-      ]]},
-      '11/28': { title:'佛羅倫斯步行參考', segments:[[
-        ['Firenze S. M. Novella',43.7766,11.2470], ['百花大教堂',43.7731,11.2560], ['學院美術館',43.7769,11.2586], ['領主廣場',43.7697,11.2559], ['老橋',43.7680,11.2530], ['米開朗基羅廣場',43.7629,11.2656]
-      ]]},
-      '11/29': { title:'威尼斯本島步行參考', segments:[[
-        ['Venezia Santa Lucia',45.4408,12.3215], ['里亞托橋',45.4380,12.3359], ['聖馬可廣場',45.4340,12.3397], ['嘆息橋',45.4341,12.3400]
-      ]]},
-      '11/30': { title:'聖馬可區步行參考', segments:[[
-        ['聖馬可廣場',45.4340,12.3397], ['總督宮',45.4337,12.3400], ['聖馬可大教堂',45.4345,12.3398], ['Calle de le Rasse',45.4352,12.3412]
-      ]]}
-    };
+<!-- 每日行程 -->
+<dialog id="dayDlg" class="sheet">
+  <div class="sheet-head"><h2>每日行程</h2><button type="button" class="x" data-close aria-label="關閉">×</button></div>
+  <ul class="day-list" id="dayList"></ul>
+</dialog>
 
-    function createWalkingMapSection(details, mapData, index) {
-      const section = document.createElement('section');
-      section.className = 'walking-map-section';
-      const allPoints = mapData.segments.flat();
-      const lats = allPoints.map(point => point[1]);
-      const lons = allPoints.map(point => point[2]);
-      const minLat = Math.min(...lats), maxLat = Math.max(...lats), minLon = Math.min(...lons), maxLon = Math.max(...lons);
-      const latPad = Math.max((maxLat - minLat) * .18, .002), lonPad = Math.max((maxLon - minLon) * .18, .002);
-      const x = lon => 8 + ((lon - (minLon - lonPad)) / ((maxLon + lonPad) - (minLon - lonPad))) * 84;
-      const y = lat => 90 - ((lat - (minLat - latPad)) / ((maxLat + latPad) - (minLat - latPad))) * 80;
-      const routePoints = allPoints.map(point => `${x(point[2]).toFixed(2)},${y(point[1]).toFixed(2)}`).join(' ');
-      const distanceKm = (a, b) => {
-        const radius = 6371;
-        const dLat = (b[1] - a[1]) * Math.PI / 180;
-        const dLon = (b[2] - a[2]) * Math.PI / 180;
-        const lat1 = a[1] * Math.PI / 180, lat2 = b[1] * Math.PI / 180;
-        const haversine = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
-        return radius * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine)) * 1.25;
-      };
-      const walkStats = allPoints.slice(0, -1).map((point, pointIndex) => {
-        const km = distanceKm(point, allPoints[pointIndex + 1]);
-        const minutes = Math.max(1, Math.round(km * 13));
-        return `<span class="walk-segment">${pointIndex + 1} → ${pointIndex + 2}｜約 ${km.toFixed(1)} km｜${minutes} 分鐘</span>`;
-      }).join('');
-      const markers = allPoints.map((point, pointIndex) => {
-        const px = x(point[2]).toFixed(2), py = y(point[1]).toFixed(2);
-        const mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(point[0] + ' Italy');
-        return `<a href="${mapUrl}" target="_blank" rel="noreferrer" aria-label="${pointIndex + 1}. ${point[0]}"><circle class="map-marker" cx="${px}" cy="${py}" r="2.8"></circle><text class="map-number" x="${px}" y="${py}">${pointIndex + 1}</text><text class="map-label" x="${(Number(px) + 3.5).toFixed(2)}" y="${(Number(py) - 2).toFixed(2)}">${point[0]}</text></a>`;
-      }).join('');
-      const patternId = 'map-grid-' + index;
-      const svg = `<svg viewBox="0 0 100 100" role="img" aria-label="${mapData.title}"><defs><pattern id="${patternId}" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="#d9d2c3" stroke-width=".35" opacity=".65"></path></pattern></defs><rect width="100" height="100" fill="#f4f0e5"></rect><rect width="100" height="100" fill="url(#${patternId})"></rect><polyline class="map-route" points="${routePoints}"></polyline>${markers}<text class="map-compass" x="94" y="8">N</text><path d="M94 10 L94 17 M94 10 L92.5 13 M94 10 L95.5 13" stroke="#315d50" stroke-width=".6" fill="none"></path></svg>`;
-      const modalId = 'walking-map-modal-' + index;
-      section.innerHTML = `<h4>🗺️ ${mapData.title}</h4><button class="map-open-button" type="button" aria-controls="${modalId}">查看簡易地圖</button>`;
-      const modal = document.createElement('div');
-      modal.className = 'modal';
-      modal.id = modalId;
-      modal.hidden = true;
-      modal.innerHTML = `<section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="${modalId}-title"><div class="modal-row"><h2 id="${modalId}-title">🗺️ ${mapData.title}</h2><button class="modal-close" type="button" aria-label="關閉">×</button></div><div class="map-schematic"><strong>地圖式步行路線參考</strong><div class="drawn-map">${svg}</div><div class="walk-stats" aria-label="分段步行距離與時間">${walkStats}</div></div><p class="map-note">距離與時間為依座標估算的步行參考值，實際街道路線、坡度、過馬路與停留時間可能不同。點擊景點標記可開啟 Google Maps。</p></section>`;
-      document.body.append(modal);
-      const openButton = section.querySelector('.map-open-button');
-      const closeButton = modal.querySelector('.modal-close');
-      openButton.addEventListener('click', () => { modal.hidden = false; });
-      closeButton.addEventListener('click', () => { modal.hidden = true; });
-      modal.addEventListener('click', event => { if (event.target === modal) modal.hidden = true; });
-      details.insertBefore(section, details.children[1] || null);
-    }
+<!-- 地圖 -->
+<dialog id="mapDlg" class="sheet sheet-map">
+  <div class="sheet-head"><h2 id="mapTitle">簡易地圖</h2><button type="button" class="x" data-close aria-label="關閉">×</button></div>
+  <div class="map-wrap" id="mapSvg"></div>
+  <ol class="legs" id="mapLegs"></ol>
+  <p class="map-note">示意圖依相對地理位置繪製，非實際街道。距離與步行時間皆為<strong>參考值</strong>，實際會因街道繞行、坡度、過馬路與停留時間而不同。點擊編號標記可開啟 Google Maps。</p>
+</dialog>
 
-    function buildWalkingMaps(content) {
-      let index = 0;
-      content.querySelectorAll('details.day-card').forEach(details => {
-        const dateMatch = details.querySelector('summary').textContent.match(/\d{2}\/\d{2}/);
-        const mapData = dateMatch && walkingMaps[dateMatch[0]];
-        if (mapData) createWalkingMapSection(details, mapData, index++);
-      });
-    }
-
-    function addMapLinks(root) {
-      const mapByLabel = new Map(mapPlaces);
-      root.querySelectorAll('a').forEach(anchor => {
-        const label = anchor.textContent.trim();
-        if (mapByLabel.has(label) && !label.startsWith('📍') && !anchor.closest('h1,h2,h3,summary')) {
-          anchor.textContent = '📍 ' + label;
-          anchor.classList.add('place-link');
-          anchor.target = '_blank';
-          anchor.rel = 'noreferrer';
-        }
-      });
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      const nodes = [];
-      while (walker.nextNode()) {
-        const node = walker.currentNode;
-        if (node.parentElement.closest('a,code,script,style,h1,h2,h3,summary')) continue;
-        if (mapPlaces.some(([label]) => node.nodeValue.includes(label))) nodes.push(node);
-      }
-      nodes.forEach(node => {
-        let text = node.nodeValue;
-        const fragment = document.createDocumentFragment();
-        while (text) {
-          let hit = null;
-          mapPlaces.forEach(([label, query]) => {
-            const index = text.indexOf(label);
-            if (index >= 0 && (!hit || index < hit.index || (index === hit.index && label.length > hit.label.length))) hit = {index, label, query};
-          });
-          if (!hit) { fragment.append(text); break; }
-          if (hit.index) fragment.append(text.slice(0, hit.index));
-          const link = document.createElement('a');
-          link.className = 'place-link'; link.target = '_blank'; link.rel = 'noreferrer';
-          link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(hit.query);
-          link.textContent = '📍 ' + hit.label;
-          fragment.append(link);
-          text = text.slice(hit.index + hit.label.length);
-        }
-        node.replaceWith(fragment);
-      });
-    }
-
-    function makeDayAccordions(content) {
-      [...content.querySelectorAll('h2')].filter(h => /^\d{2}\/\d{2}/.test(h.textContent.trim())).forEach((heading, index) => {
-        const details = document.createElement('details');
-        details.className = 'day-card';
-        details.id = 'day-' + index;
-        const summary = document.createElement('summary');
-        summary.textContent = heading.textContent;
-        details.append(summary);
-        heading.parentNode.insertBefore(details, heading);
-        let node = heading.nextSibling;
-        heading.remove();
-        while (node && !(node.nodeType === 1 && node.matches('h2'))) {
-          const next = node.nextSibling;
-          details.append(node);
-          node = next;
-        }
-      });
-    }
-
-    function groupTableCellContent(content) {
-      content.querySelectorAll('table tbody td').forEach(cell => {
-        if (cell.querySelector(':scope > .cell-value')) return;
-        const value = document.createElement('span');
-        value.className = 'cell-value';
-        while (cell.firstChild) value.append(cell.firstChild);
-        cell.append(value);
-      });
-    }
-
-    function removeSectionByTitle(content, title) {
-      [...content.querySelectorAll('h2')].filter(heading => heading.textContent.includes(title)).forEach(heading => {
-        let node = heading.nextSibling;
-        heading.remove();
-        while (node && !(node.nodeType === 1 && node.matches('h2'))) {
-          const next = node.nextSibling;
-          node.remove();
-          node = next;
-        }
-      });
-    }
-
-    function buildDailyMenu(content) {
-      const dailyMenu = document.getElementById('quick-guide');
-      const days = [...content.querySelectorAll('details.day-card')];
-      dailyMenu.innerHTML = days.map((day, index) => {
-        const id = day.id || 'day-' + index;
-        day.id = id;
-        return `<a href="#${id}">${day.querySelector('summary').textContent}</a>`;
-      }).join('');
-      dailyMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
-        event.preventDefault();
-        const target = document.getElementById(link.getAttribute('href').slice(1));
-        if (target) { target.open = true; target.scrollIntoView({behavior:'smooth', block:'start'}); }
-        document.getElementById('daily-modal').hidden = true;
-      }));
-    }
-
-    async function loadItinerary() {
-      const content = document.getElementById('content');
-      try {
-        const response = await fetch('itinerary.md');
-        if (!response.ok) throw new Error('Markdown 載入失敗');
-        const markdown = await response.text();
-        content.innerHTML = marked.parse(markdown);
-        removeSectionByTitle(content, '快速導覽');
-        removeSectionByTitle(content, '行程總覽');
-        [...content.querySelectorAll('p')].filter(p => /^(檔案用途|狀態註記原則)/.test(p.textContent.trim())).forEach(p => p.remove());
-        content.querySelectorAll('table').forEach(table => {
-          const labels = [...table.querySelectorAll('thead th')].map(cell => cell.textContent.trim());
-          const isTimetable = labels[0] === '時間' && labels[1] === '行程';
-          if (isTimetable) table.classList.add('timetable');
-          table.querySelectorAll('tbody tr').forEach(row => {
-            [...row.children].forEach((cell, index) => cell.setAttribute('data-label', labels[index] || ''));
-            if (isTimetable && row.children[0]) {
-              const timeCell = row.children[0];
-              timeCell.classList.add('time-cell');
-              const hourMatch = timeCell.textContent.match(/\b(\d{1,2})[:：]/);
-              const hour = hourMatch ? Number(hourMatch[1]) : null;
-              if (hour !== null) timeCell.classList.add(hour < 12 ? 'time-morning' : hour < 18 ? 'time-afternoon' : hour < 21 ? 'time-evening' : 'time-night');
-            }
-          });
-        });
-        makeDayAccordions(content);
-        buildWalkingMaps(content);
-        addMapLinks(content);
-        groupTableCellContent(content);
-        buildDailyMenu(content);
-      } catch (error) {
-        content.innerHTML = '<div class="status">無法載入行程內容，請確認 itinerary.md 與本頁位於同一個資料夾。</div>';
-        document.getElementById('quick-guide').innerHTML = '';
-      }
-    }
-
-    const eurTwdRate = 36.72;
-    function updateConversion() {
-      const amount = Number(document.getElementById('currency-amount').value) || 0;
-      const direction = document.getElementById('currency-direction').value;
-      const converted = direction === 'eur-twd' ? amount * eurTwdRate : amount / eurTwdRate;
-      const from = direction === 'eur-twd' ? 'EUR' : 'TWD';
-      const to = direction === 'eur-twd' ? 'TWD' : 'EUR';
-      document.getElementById('rate-result').textContent = `${Math.round(converted).toLocaleString()} ${to}`;
-    }
-    document.getElementById('open-currency').addEventListener('click', () => {
-      document.getElementById('currency-modal').hidden = false;
-      updateConversion();
-      requestAnimationFrame(() => {
-        const amountInput = document.getElementById('currency-amount');
-        amountInput.focus();
-        amountInput.select();
-      });
-    });
-    document.getElementById('close-currency').addEventListener('click', () => document.getElementById('currency-modal').hidden = true);
-    document.getElementById('currency-modal').addEventListener('click', event => { if (event.target.id === 'currency-modal') event.currentTarget.hidden = true; });
-    document.getElementById('close-daily').addEventListener('click', () => document.getElementById('daily-modal').hidden = true);
-    document.getElementById('daily-modal').addEventListener('click', event => { if (event.target.id === 'daily-modal') event.currentTarget.hidden = true; });
-    ['currency-direction','currency-amount'].forEach(id => document.getElementById(id).addEventListener('input', updateConversion));
-    document.getElementById('open-days').addEventListener('click', () => {
-      document.getElementById('daily-modal').hidden = false;
-    });
-    loadItinerary();
-  </script>
+<script src="app.js"></script>
 </body>
 </html>
