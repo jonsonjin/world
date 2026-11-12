@@ -108,6 +108,130 @@
   });
   $('#openDays').addEventListener('click', function () { openDlg(dayDlg); });
 
+
+  /* ---------- 常用句子 ---------- */
+  var PHRASES = [
+    { cat: '基本', items: [
+      ['你好（早上／白天）', 'Buongiorno!', 'Good morning!'],
+      ['晚安（傍晚後打招呼）', 'Buonasera!', 'Good evening!'],
+      ['謝謝', 'Grazie mille!', 'Thank you very much!'],
+      ['不好意思／借過', 'Mi scusi, permesso.', 'Excuse me.'],
+      ['我不會說義大利文，你會說英文嗎？', 'Non parlo italiano. Parla inglese?', "I don't speak Italian. Do you speak English?"],
+      ['可以說慢一點嗎？', 'Può parlare più lentamente, per favore?', 'Could you speak more slowly, please?'],
+      ['可以幫我寫下來嗎？', 'Me lo può scrivere, per favore?', 'Could you write it down, please?'],
+      ['不用了，謝謝', 'No, grazie.', 'No, thank you.']
+    ]},
+    { cat: '交通', items: [
+      ['車站在哪裡？', "Dov'è la stazione?", 'Where is the train station?'],
+      ['這班火車是去威尼斯嗎？', 'Questo treno va a Venezia?', 'Does this train go to Venice?'],
+      ['這班車從第幾月台出發？', 'Da quale binario parte questo treno?', 'Which platform does this train leave from?'],
+      ['兩張到 Santa Lucia 的票，謝謝', 'Due biglietti per Venezia Santa Lucia, per favore.', 'Two tickets to Venezia Santa Lucia, please.'],
+      ['這班船有停聖馬可嗎？', 'Questo vaporetto si ferma a San Marco?', 'Does this water bus stop at San Marco?'],
+      ['請載我們到這個地址', 'Ci porti a questo indirizzo, per favore.', 'Please take us to this address.'],
+      ['可以幫我叫計程車嗎？', 'Mi può chiamare un taxi, per favore?', 'Could you call a taxi for me, please?'],
+      ['到這裡大概多少錢？', 'Quanto costa più o meno fino a qui?', 'About how much does it cost to get here?']
+    ]},
+    { cat: '餐廳', items: [
+      ['兩位，謝謝', 'Un tavolo per due, per favore.', 'A table for two, please.'],
+      ['有英文菜單嗎？', 'Avete un menù in inglese?', 'Do you have an English menu?'],
+      ['你推薦什麼？', 'Cosa ci consiglia?', 'What do you recommend?'],
+      ['我要這個', 'Vorrei questo, per favore.', "I'd like this, please."],
+      ['一瓶礦泉水（無氣泡）', "Una bottiglia d'acqua naturale, per favore.", 'A bottle of still water, please.'],
+      ['可以外帶嗎？', 'Posso portarlo via?', 'Can I take it away?'],
+      ['麻煩買單', 'Il conto, per favore.', 'The bill, please.'],
+      ['可以分開付嗎？', 'Possiamo pagare separatamente?', 'Can we pay separately?']
+    ]},
+    { cat: '景點購物', items: [
+      ['多少錢？', 'Quanto costa?', 'How much is it?'],
+      ['可以刷卡嗎？', 'Posso pagare con la carta?', 'Can I pay by card?'],
+      ['入口在哪裡？', "Dov'è l'ingresso?", 'Where is the entrance?'],
+      ['我們已經買好票了（給看電子憑證）', 'Abbiamo già i biglietti.', 'We already have tickets.'],
+      ['這張票要在哪裡兌換？', 'Dove possiamo ritirare i biglietti?', 'Where can we collect our tickets?'],
+      ['可以拍照嗎？', 'Si possono fare foto?', 'Is photography allowed?'],
+      ['可以辦理退稅嗎？', 'Posso avere il modulo per il tax free?', 'Can I get a tax-free form?'],
+      ['我只是看看，謝謝', 'Sto solo guardando, grazie.', "I'm just looking, thanks."]
+    ]},
+    { cat: '住宿', items: [
+      ['我們有訂房', 'Abbiamo una prenotazione.', 'We have a reservation.'],
+      ['可以先寄放行李嗎？', 'Possiamo lasciare qui i bagagli?', 'Can we leave our luggage here?'],
+      ['我們回來拿行李', 'Siamo tornati a prendere i bagagli.', "We're back to pick up our luggage."],
+      ['幾點可以入住？', 'A che ora si può fare il check-in?', 'What time is check-in?'],
+      ['Wi-Fi 密碼是什麼？', 'Qual è la password del Wi-Fi?', 'What is the Wi-Fi password?'],
+      ['房間有問題，可以幫忙看看嗎？', "C'è un problema in camera, può venire a vedere?", "There's a problem in the room. Could you take a look?"]
+    ]},
+    { cat: '緊急', items: [
+      ['廁所在哪裡？', "Dov'è il bagno?", 'Where is the restroom?'],
+      ['可以幫幫我嗎？', 'Mi può aiutare, per favore?', 'Could you help me, please?'],
+      ['我們迷路了', 'Ci siamo persi.', "We're lost."],
+      ['最近的藥局在哪裡？', "Dov'è la farmacia più vicina?", 'Where is the nearest pharmacy?'],
+      ['我需要看醫生', 'Ho bisogno di un medico.', 'I need a doctor.'],
+      ['請叫救護車！', "Chiami un'ambulanza, per favore!", 'Please call an ambulance!'],
+      ['我的錢包被偷了', 'Mi hanno rubato il portafoglio.', 'My wallet has been stolen.'],
+      ['警察局在哪裡？', "Dov'è la polizia?", 'Where is the police station?']
+    ]}
+  ];
+
+  var phDlg = $('#phDlg'), phCats = $('#phCats'), phList = $('#phList');
+  var showDlg = $('#showDlg'), curIt = '';
+  var curCat = 0;
+  try { var saved = parseInt(localStorage.getItem('phCat'), 10); if (saved >= 0 && saved < PHRASES.length) curCat = saved; } catch (e) {}
+
+  function renderCats() {
+    phCats.innerHTML = '';
+    PHRASES.forEach(function (g, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = g.cat; b.setAttribute('role', 'tab');
+      if (i === curCat) b.className = 'on';
+      b.addEventListener('click', function () {
+        curCat = i;
+        try { localStorage.setItem('phCat', i); } catch (e) {}
+        renderCats(); renderList(); phList.scrollTop = 0;
+      });
+      phCats.appendChild(b);
+    });
+  }
+  function renderList() {
+    phList.innerHTML = '';
+    PHRASES[curCat].items.forEach(function (p) {
+      var li = document.createElement('li');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.innerHTML = '<span class="ph-zh"><span class="z"></span><span class="ph-it" lang="it"></span></span><span class="ph-go" aria-hidden="true">›</span>';
+      $('.z', b).textContent = p[0];
+      $('.ph-it', b).textContent = p[1];
+      b.addEventListener('click', function () { showPhrase(p); });
+      li.appendChild(b); phList.appendChild(li);
+    });
+  }
+  var canSpeak = 'speechSynthesis' in window;
+  function speak(t) {
+    if (!canSpeak) return;
+    try {
+      speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(t);
+      u.lang = 'it-IT'; u.rate = 0.85;
+      var v = speechSynthesis.getVoices().filter(function (x) { return /^it/i.test(x.lang); })[0];
+      if (v) u.voice = v;
+      speechSynthesis.speak(u);
+    } catch (e) {}
+  }
+  function showPhrase(p) {
+    curIt = p[1];
+    $('#showIt').textContent = p[1];
+    $('#showEn').textContent = p[2];
+    $('#showZh').textContent = p[0];
+    if (typeof showDlg.showModal === 'function') showDlg.showModal(); else showDlg.setAttribute('open', '');
+  }
+  $('#showSay').hidden = !canSpeak;
+  $('#showSay').addEventListener('click', function () { speak(curIt); });
+  showDlg.addEventListener('close', function () {
+    if (canSpeak) try { speechSynthesis.cancel(); } catch (e) {}
+    if (phDlg.open) document.documentElement.style.overflow = 'hidden';
+  });
+  $('#openPh').addEventListener('click', function () {
+    renderCats(); renderList(); openDlg(phDlg);
+  });
+
   /* ---------- 簡易步行地圖 ---------- */
   // lp: 標籤位置 r/l/t/b；mode: 抵達此點的交通方式（預設步行）
   var MAPS = {

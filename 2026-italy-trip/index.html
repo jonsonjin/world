@@ -375,6 +375,7 @@
 <nav class="menubar" aria-label="快速功能">
   <button type="button" id="openFx"><span class="mb-ico" aria-hidden="true">€</span><span>匯率換算</span></button>
   <button type="button" id="openDays"><span class="mb-ico" aria-hidden="true">☰</span><span>每日行程</span></button>
+  <button type="button" id="openPh"><span class="mb-ico" aria-hidden="true">💬</span><span>常用句子</span></button>
 </nav>
 
 <!-- 匯率換算 -->
@@ -407,6 +408,27 @@
   <div class="map-wrap" id="mapSvg"></div>
   <ol class="legs" id="mapLegs"></ol>
   <p class="map-note">示意圖依相對地理位置繪製，非實際街道。距離與步行時間皆為<strong>參考值</strong>，實際會因街道繞行、坡度、過馬路與停留時間而不同。點擊編號標記可開啟 Google Maps。</p>
+</dialog>
+
+<!-- 常用句子 -->
+<dialog id="phDlg" class="sheet sheet-ph">
+  <div class="sheet-head"><h2>常用句子</h2><button type="button" class="x" data-close aria-label="關閉">×</button></div>
+  <div class="ph-cats" id="phCats" role="tablist"></div>
+  <p class="ph-hint">點選句子，即可放大給對方看</p>
+  <ul class="ph-list" id="phList"></ul>
+</dialog>
+
+<!-- 句子展示 -->
+<dialog id="showDlg" class="show">
+  <div class="show-bar">
+    <button type="button" class="show-back" data-close>‹ 返回</button>
+    <button type="button" class="show-say" id="showSay">🔊 播放</button>
+  </div>
+  <div class="show-body">
+    <p class="show-it" id="showIt" lang="it"></p>
+    <p class="show-en" id="showEn" lang="en"></p>
+    <p class="show-zh" id="showZh"></p>
+  </div>
 </dialog>
 
 <script src="app.js"></script>
