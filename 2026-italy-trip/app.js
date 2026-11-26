@@ -257,8 +257,8 @@
     '1127': { title: '11/27 古羅馬區', stops: [
       { n: 'Circo Massimo 地鐵站', q: 'Circo Massimo Metro Station Roma', lat: 41.8838, lng: 12.4891, lp: 'r' },
       { n: '真理之口', q: 'Bocca della Verità Roma', lat: 41.8881, lng: 12.4815, lp: 'b' },
-      { n: '勝利神廟', q: 'Tempio di Ercole Vincitore Roma', lat: 41.8888, lng: 12.4802, lp: 'l' },
-      { n: '羅馬競技場', q: 'Colosseo Roma', lat: 41.8902, lng: 12.4922, lp: 'r' },
+      { n: '勝利神廟', q: 'Tempio di Ercole Vincitore Roma', lat: 41.8888, lng: 12.4802, lp: 't' },
+      { n: '羅馬競技場', q: 'Colosseo Roma', lat: 41.8902, lng: 12.4922, lp: 't' },
       { n: '帕拉蒂尼山', q: 'Palatino Roma', lat: 41.8893, lng: 12.4875, lp: 'b' },
       { n: '古羅馬廣場', q: 'Foro Romano', lat: 41.8925, lng: 12.4853, lp: 'r' },
       { n: '卡比托利歐廣場', q: 'Piazza del Campidoglio Roma', lat: 41.8934, lng: 12.4828, lp: 'l' },
@@ -344,21 +344,8 @@
       svg += '<line x1="' + a.x.toFixed(1) + '" y1="' + a.y.toFixed(1) + '" x2="' + b.x.toFixed(1) + '" y2="' + b.y.toFixed(1) +
         '" stroke="#c0392b" stroke-width="3" stroke-dasharray="' + (info.car ? '2 6' : '8 6') + '" stroke-linecap="round"/>';
     }
-    // 距離標籤
-    for (var j = 1; j < stops.length; j++) {
-      var p1 = P[j - 1], p2 = P[j], lg = legs[j - 1];
-      var mx = (p1.x + p2.x) / 2, my = (p1.y + p2.y) / 2;
-      var dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.hypot(dx, dy) || 1;
-      var nx = -dy / len * 11, ny = dx / len * 11;
-      var lx = Math.min(W - 34, Math.max(34, mx + nx)), ly = Math.min(H - 10, Math.max(14, my + ny));
-      var label = lg.info.sub.replace('步行約 ', '').replace('車程約 ', '🚕') ;
-      var tw = label.length * 6.4 + 10;
-      svg += '<g><rect x="' + (lx - tw / 2).toFixed(1) + '" y="' + (ly - 9).toFixed(1) + '" width="' + tw.toFixed(1) + '" height="16" rx="8" fill="#fff" stroke="#e7b6a5"/>' +
-        '<text x="' + lx.toFixed(1) + '" y="' + (ly + 3).toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#a8432b">' + esc(label) + '</text></g>';
-    }
-    // 景點
-    stops.forEach(function (s, i) {
-      if (s.ret) return; // 返回點與起點重疊，不重畫
+    // 景點標籤位置（先算好，讓距離標籤避開）
+    var LB = stops.map(function (s, i) {
       var p = P[i], lp = s.lp || 'r', tx = p.x, ty = p.y, anc = 'middle';
       if (lp === 'r') { tx = p.x + 16; ty = p.y + 4; anc = 'start'; }
       if (lp === 'l') { tx = p.x - 16; ty = p.y + 4; anc = 'end'; }
@@ -368,6 +355,41 @@
       if (anc === 'start' && tx + tw2 > W - 6) { tx = p.x - 16; anc = 'end'; }
       if (anc === 'end' && tx - tw2 < 6) { tx = p.x + 16; anc = 'start'; }
       if (anc === 'middle') tx = Math.min(W - 6 - tw2 / 2, Math.max(6 + tw2 / 2, tx));
+      var cx = anc === 'start' ? tx + tw2 / 2 : anc === 'end' ? tx - tw2 / 2 : tx;
+      return { tx: tx, ty: ty, anc: anc, x: cx, y: ty - 4, w: tw2, h: 16, skip: !!s.ret };
+    });
+    var obstacles = LB.filter(function (r) { return !r.skip; });
+
+    // 距離標籤（避開景點、景點名稱與其他標籤）
+    var placed = [];
+    for (var j = 1; j < stops.length; j++) {
+      var p1 = P[j - 1], p2 = P[j], lg = legs[j - 1];
+      var dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.hypot(dx, dy) || 1;
+      if (len < 40) continue; // 太短的路段只列在下方清單
+      var label = lg.info.sub.replace('步行約 ', '').replace('車程約 ', '🚕');
+      var tw = label.length * 6.4 + 10;
+      var best = null, bestScore = -Infinity;
+      [0.5, 0.4, 0.6, 0.3, 0.7].forEach(function (t) {
+        [11, -11, 20, -20, 30, -30].forEach(function (off) {
+          var cx = p1.x + dx * t - dy / len * off, cy = p1.y + dy * t + dx / len * off;
+          cx = Math.min(W - 34, Math.max(34, cx)); cy = Math.min(H - 10, Math.max(14, cy));
+          var sc2 = Infinity;
+          P.forEach(function (q) { sc2 = Math.min(sc2, Math.hypot(q.x - cx, q.y - cy) - 14); });
+          placed.concat(obstacles).forEach(function (r) {
+            sc2 = Math.min(sc2, Math.max(Math.abs(r.x - cx) - (r.w + tw) / 2, Math.abs(r.y - cy) - ((r.h || 16) + 16) / 2));
+          });
+          if (sc2 > bestScore + 2) { bestScore = sc2; best = { x: cx, y: cy }; }
+        });
+      });
+      placed.push({ x: best.x, y: best.y, w: tw, h: 16 });
+      svg += '<g><rect x="' + (best.x - tw / 2).toFixed(1) + '" y="' + (best.y - 9).toFixed(1) + '" width="' + tw.toFixed(1) + '" height="16" rx="8" fill="#fff" stroke="#e7b6a5"/>' +
+        '<text x="' + best.x.toFixed(1) + '" y="' + (best.y + 3).toFixed(1) + '" text-anchor="middle" font-size="10.5" font-weight="700" fill="#a8432b">' + esc(label) + '</text></g>';
+    }
+
+    // 景點
+    stops.forEach(function (s, i) {
+      if (s.ret) return; // 返回點與起點重疊，不重畫
+      var p = P[i], tx = LB[i].tx, ty = LB[i].ty, anc = LB[i].anc;
       svg += '<a class="stop" href="' + esc(gmaps(s.q)) + '" target="_blank" rel="noopener" tabindex="0">' +
         '<circle class="dot" cx="' + p.x.toFixed(1) + '" cy="' + p.y.toFixed(1) + '" r="11" fill="#1f4d3a" stroke="#fff" stroke-width="2"/>' +
         '<text x="' + p.x.toFixed(1) + '" y="' + (p.y + 4).toFixed(1) + '" text-anchor="middle" font-size="11.5" font-weight="700" fill="#fff">' + (i + 1) + '</text>' +
