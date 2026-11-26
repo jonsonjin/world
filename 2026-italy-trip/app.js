@@ -255,16 +255,15 @@
       { n: '聖天使橋', q: "Ponte Sant'Angelo", lat: 41.9016, lng: 12.4666, lp: 'b' }
     ]},
     '1127': { title: '11/27 古羅馬區', stops: [
-      { n: 'Colosseo 地鐵站', q: 'Colosseo Metro Station Roma', lat: 41.8917, lng: 12.4930, lp: 'r' },
+      { n: 'Circo Massimo 地鐵站', q: 'Circo Massimo Metro Station Roma', lat: 41.8838, lng: 12.4891, lp: 'r' },
+      { n: '真理之口', q: 'Bocca della Verità Roma', lat: 41.8881, lng: 12.4815, lp: 'b' },
+      { n: '勝利神廟', q: 'Tempio di Ercole Vincitore Roma', lat: 41.8888, lng: 12.4802, lp: 'l' },
       { n: '羅馬競技場', q: 'Colosseo Roma', lat: 41.8902, lng: 12.4922, lp: 'r' },
       { n: '帕拉蒂尼山', q: 'Palatino Roma', lat: 41.8893, lng: 12.4875, lp: 'b' },
       { n: '古羅馬廣場', q: 'Foro Romano', lat: 41.8925, lng: 12.4853, lp: 'r' },
       { n: '卡比托利歐廣場', q: 'Piazza del Campidoglio Roma', lat: 41.8934, lng: 12.4828, lp: 'l' },
       { n: '威尼斯廣場', q: 'Piazza Venezia Roma', lat: 41.8960, lng: 12.4826, lp: 't' },
-      { n: '真理之口', q: 'Bocca della Verità Roma', lat: 41.8881, lng: 12.4815, lp: 'b' },
-      { n: '勝利神廟', q: 'Tempio di Ercole Vincitore Roma', lat: 41.8888, lng: 12.4802, lp: 'l' },
-      { n: '橘園', q: 'Giardino degli Aranci Roma', lat: 41.8848, lng: 12.4797, lp: 'r' },
-      { n: '騎士團鎖孔', q: 'Buco della Serratura Aventino Roma', lat: 41.8832, lng: 12.4777, lp: 'l' }
+      { n: '猶太區', q: 'Ghetto Ebraico Roma', lat: 41.8925, lng: 12.4775, lp: 'l' }
     ]},
     '1128': { title: '11/28 佛羅倫斯', stops: [
       { n: 'Firenze S.M.N. 車站', q: 'Firenze Santa Maria Novella station', lat: 43.7764, lng: 11.2480, lp: 'r' },
